@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/imageView" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:text="New Text"
+        android:id="@+id/FortuneMsg"
+        android:layout_marginLeft="75dp"
+        android:textSize="20dp"
+        android:gravity="left|center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:text="New Text"
+        android:id="@+id/Date"
+        android:layout_below="@+id/FortuneMsg"
+        android:layout_alignStart="@+id/FortuneMsg"
+        android:textSize="15dp"
+        android:gravity="left|center" />
+</RelativeLayout>

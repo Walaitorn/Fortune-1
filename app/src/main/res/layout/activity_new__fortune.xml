@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="a13279.egco428.com.fortune.New_Fortune"
+    android:background="#f9f9f9">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="New Cookies"
+        android:id="@+id/textView"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="#f4f3f3" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/imageView2"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/closed_cookie" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="Result"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignParentStart="true"
+        android:textIsSelectable="false"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:background="#dffef8"
+         />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Result: No Result"
+        android:id="@+id/fortuneMsg"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:gravity="left|center|clip_vertical"
+        android:background="#ffffff" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Date:"
+        android:id="@+id/fortuneDate"
+        android:layout_below="@+id/fortuneMsg"
+        android:layout_centerHorizontal="true"
+        android:gravity="center|right"
+        android:background="#c8c8c8" />
+
+    <Button
+        android:id ="@+id/push_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/button_bg_round"
+        android:padding="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Shake"
+        android:onClick="PressBtn" />
+
+</RelativeLayout>
