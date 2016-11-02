@@ -63,7 +63,7 @@ public class New_Fortune extends AppCompatActivity implements SensorEventListene
      public void PressBtn (View v){
         if (!isPress){// && sensor) {
             Btn.setText("Shaking");
-            //getAccelerometer(events);
+            getAccelerometer(events);
             Btn.setText("Save");
             isPress = true;
         } else {
@@ -97,12 +97,11 @@ public class New_Fortune extends AppCompatActivity implements SensorEventListene
         while (count<4)
         if (accelationSquareRoot >= 4) //
         {
-//            if (actualTime - lastUpdate < 200) {
-//                return;
-//            }
-//            lastUpdate = actualTime;
+            if (actualTime - lastUpdate < 500) {
+                return;
+            }
+            lastUpdate = actualTime;
             count++;
-
         }
         Random aa = new Random();
         int ran = aa.nextInt(5);
