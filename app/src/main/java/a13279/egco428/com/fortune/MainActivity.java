@@ -3,6 +3,7 @@ package a13279.egco428.com.fortune;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,13 +22,15 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    public static final String Title = "Course Title";
-    public static final String Date = "Course Description";
-    public static final String pic = "courseNumber";
+
+    private FortuneDataSource dataSource;
+    private ArrayAdapter<FortuneMessage> fortuneArrayAdapter;
+
 
     public static final int DETAIL_REQ_CODE = 1001;
-    protected List<Fortune> data;
+    protected List<FortuneMessage> values;
 
+    private ListView listView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,26 +39,37 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        data = DataProvider.getData();
-        ListView listView = (ListView)findViewById(R.id.listView);
-        ArrayAdapter<Fortune> fortuneArrayAdapter = new FortuneArrayAdapter(this,0,data);
+        dataSource = new FortuneDataSource(this);
+        dataSource.open();
+        values = dataSource.getAllComments();
+        fortuneArrayAdapter = new FortuneArrayAdapter(this,0,values);
+        listView = (ListView)findViewById(R.id.listView);
         listView.setAdapter(fortuneArrayAdapter); //push data in adapter into listview
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Fortune course = data.get(position);
-                displayDetail(course);
+
+                FortuneMessage comment = null;
+
+                if(fortuneArrayAdapter.getCount()>0){
+                    comment = fortuneArrayAdapter.getItem(position); // delete first item
+                    dataSource.deleteComment(comment); // delete in database
+                    fortuneArrayAdapter.remove(comment); // delete in listview
+                }
             }
         });
+        fortuneArrayAdapter.notifyDataSetChanged();
 
     }
 
-    class FortuneArrayAdapter extends ArrayAdapter<Fortune> {
-        Context context;
-        List<Fortune> objects;
 
-        public FortuneArrayAdapter(Context context, int resource, List<Fortune> objects) {
+    class FortuneArrayAdapter extends ArrayAdapter<FortuneMessage> {
+        Context context;
+        List<FortuneMessage> objects;
+
+        public FortuneArrayAdapter(Context context, int resource, List<FortuneMessage> objects) {
             super(context, resource, objects);
             this.context = context;
             this.objects = objects;
@@ -63,17 +77,18 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Fortune fortune = objects.get(position);
+            FortuneMessage fortune = objects.get(position);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.fortune_item, null);
 
             TextView txt = (TextView) view.findViewById(R.id.FortuneMsg);
-            txt.setText(String.valueOf(fortune.getFortunemsg()));
+            txt.setText(String.valueOf(fortune.getComment()));
+            //txt.setTextColor(Color.parseColor();
 
             TextView txt2 = (TextView) view.findViewById(R.id.Date);
             txt2.setText("Date: "+fortune.getDate());
 
-            String uri = fortune.getFortunepic();
+            String uri = fortune.getPic();
             int res = context.getResources().getIdentifier(uri, "drawable", context.getPackageName());
             ImageView image = (ImageView)view.findViewById(R.id.imageView);
             image.setImageResource(res);
@@ -82,9 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void displayDetail(Fortune course){
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -102,10 +114,27 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add) {
+
             startActivity(new Intent(MainActivity.this, New_Fortune.class));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onResume(){
+        dataSource.open();
+        values = dataSource.getAllComments();
+        fortuneArrayAdapter = new FortuneArrayAdapter(this,0,values);
+        listView.setAdapter(fortuneArrayAdapter);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause(){
+        dataSource.close();
+        super.onPause();
+    }
+
 }
