@@ -8,6 +8,7 @@ public class FortuneMessage {
     private String comment;
     private String date;
     private String pic;
+    private String color;
 
 
     public long getId() {
@@ -33,6 +34,10 @@ public class FortuneMessage {
     public String getPic(){return pic;}
 
     public void setPic(String pic){this.pic = pic;}
+
+    public String getColor(){return color;}
+
+    public void setColor(String color){this.color = color;}
 
 
 

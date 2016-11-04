@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
             TextView txt = (TextView) view.findViewById(R.id.FortuneMsg);
             txt.setText(String.valueOf(fortune.getComment()));
-            //txt.setTextColor(Color.parseColor();
+            txt.setTextColor(Color.parseColor(fortune.getColor()));
 
             TextView txt2 = (TextView) view.findViewById(R.id.Date);
             txt2.setText("Date: "+fortune.getDate());

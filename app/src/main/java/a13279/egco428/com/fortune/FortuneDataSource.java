@@ -18,7 +18,7 @@ public class FortuneDataSource {
 
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
-    private String[] allCoumns = {MySQLiteHelper.COLUMN_ID,MySQLiteHelper.COLUMN_MSG,MySQLiteHelper.COLUMN_DATE,MySQLiteHelper.COLUMN_PIC};
+    private String[] allCoumns = {MySQLiteHelper.COLUMN_ID ,MySQLiteHelper.COLUMN_MSG,MySQLiteHelper.COLUMN_DATE,MySQLiteHelper.COLUMN_PIC,MySQLiteHelper.COLUMN_COLOR};
 
     public FortuneDataSource(Context context){
         dbHelper = new MySQLiteHelper(context);
@@ -32,11 +32,12 @@ public class FortuneDataSource {
         dbHelper.close();
     }
 
-    public FortuneMessage createFortune(String msg,String date,String pic){
+    public FortuneMessage createFortune(String msg,String date,String pic,String color){
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.COLUMN_MSG,msg);
         values.put(MySQLiteHelper.COLUMN_DATE,date);
         values.put(MySQLiteHelper.COLUMN_PIC,pic);
+        values.put(MySQLiteHelper.COLUMN_COLOR,color);
 
         long insertID = database.insert(MySQLiteHelper.TABLE_FORTUNE,null,values);
         Cursor cursor = database.query(MySQLiteHelper.TABLE_FORTUNE,allCoumns,MySQLiteHelper.COLUMN_ID+" = "+insertID,null,null,null,null);
@@ -78,6 +79,7 @@ public class FortuneDataSource {
         comment.setComment(cursor.getString(1));
         comment.setDate(cursor.getString(2));
         comment.setPic(cursor.getString(3));
+        comment.setColor(cursor.getString(4));
         return comment;
     }
 }

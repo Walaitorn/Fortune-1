@@ -14,15 +14,15 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_MSG = "comment"; // column's Name
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_PIC = "pic";
-
+    public static final String COLUMN_COLOR = "color";
 
     private static final String DATABASE_NAME = "fortunes.db"; // file Database Name
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database creation sql statement
     private static final String DATABASE_CREATE = "create table "
             + TABLE_FORTUNE + "(" + COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_MSG + " text not null," +COLUMN_DATE+ " text not null,"+COLUMN_PIC
+            + " integer primary key autoincrement, " + COLUMN_MSG + " text not null, " + COLUMN_DATE + " text not null, "+ COLUMN_PIC + " text not null, "+ COLUMN_COLOR
             + " text not null);";
 
     public MySQLiteHelper(Context context) {

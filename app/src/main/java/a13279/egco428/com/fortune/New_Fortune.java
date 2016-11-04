@@ -25,9 +25,9 @@ import java.util.Random;
 public class New_Fortune extends AppCompatActivity {//implements SensorEventListener {
 
     //private SensorManager sensorManager;
-    private boolean sensor = false;
-    private SensorEvent events;
-    private long lastUpdate;
+    //private boolean sensor = false;
+    //private SensorEvent events;
+    //private long lastUpdate;
     private boolean isPress=false;
     protected List<Fortune> data;
     TextView tet;
@@ -35,8 +35,10 @@ public class New_Fortune extends AppCompatActivity {//implements SensorEventList
     TextView tet2;
     private String Msg;
     private String Date;
+    private String color;
     private String img;
     private FortuneDataSource dataSource;
+    private int countClick = 0;
 
 
     Button Btn;
@@ -82,17 +84,19 @@ public class New_Fortune extends AppCompatActivity {//implements SensorEventList
     }
 
      public void PressBtn (View v){
-        if (!isPress){// && sensor) {
-
+        if (!isPress) {// && sensor) {
             Btn.setText("Save");
             randomCookies();
             isPress = true;
-        } else {
+            countClick++;
+
+        } else if(isPress && countClick==1 ) {
             pressSave();
             //Btn.setText("Shake");
-
             //isPress = false;
+            countClick++;
         }
+
     }
 
 //    @Override
@@ -111,12 +115,13 @@ public class New_Fortune extends AppCompatActivity {//implements SensorEventList
         data = DataProvider.getData();
         Fortune course = data.get(ran);
 
-
         if (ran==3) {
             tet.setTextColor(Color.parseColor("#FF5722"));
+            color = "#FF5722";
         }
         else {
             tet.setTextColor(Color.parseColor("#3F51B5"));
+            color = "#3F51B5";
         }
 
         Msg = course.getFortunemsg();
@@ -141,7 +146,7 @@ public class New_Fortune extends AppCompatActivity {//implements SensorEventList
     public void pressSave(){
 
         FortuneMessage comment = null;
-        comment = dataSource.createFortune(Msg,Date,img);
+        comment = dataSource.createFortune(Msg,Date,img,color);
 
     }
 //    private void getAccelerometer(SensorEvent event){
