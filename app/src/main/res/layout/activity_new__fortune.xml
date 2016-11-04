@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="a13279.egco428.com.fortune.New_Fortune"
-    android:background="#f9f9f9">
+    android:background="#eeeeee">
 
     <TextView
         android:layout_width="match_parent"
@@ -15,7 +15,11 @@
         android:textSize="20dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:background="#f4f3f3" />
+        android:textColor="#3F51B5"
+        android:textStyle="normal"
+        android:singleLine="false"
+        android:contextClickable="true"
+        android:autoText="false" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -36,7 +40,7 @@
         android:textSize="20dp"
         android:gravity="center"
         android:background="#dffef8"
-         />
+        android:textColor="#050505" />
 
     <TextView
         android:layout_width="match_parent"

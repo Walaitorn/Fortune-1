@@ -1,12 +1,15 @@
 package a13279.egco428.com.fortune;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,7 +49,10 @@ public class New_Fortune extends AppCompatActivity {//implements SensorEventList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new__fortune);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar mActionBar = getSupportActionBar();
+        mActionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#E3F2FD")));
+        mActionBar.setTitle(Html.fromHtml("<font color=\"gray\">" + getString(R.string.app_name) + "</font>"));
+        mActionBar.setDisplayHomeAsUpEnabled(true);
         Btn = (Button) findViewById(R.id.push_button);
         tet = (TextView) findViewById(R.id.fortuneMsg);
         cookie = (ImageView)findViewById(R.id.imageView2);
