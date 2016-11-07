@@ -15,11 +15,12 @@
         android:textSize="20dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:textColor="#3F51B5"
+        android:textColor="#090909"
         android:textStyle="normal"
         android:singleLine="false"
         android:contextClickable="true"
-        android:autoText="false" />
+        android:autoText="false"
+        android:background="#ffffff" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -27,7 +28,9 @@
         android:id="@+id/imageView2"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/closed_cookie" />
+        android:src="@drawable/closed_cookie"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -39,7 +42,7 @@
         android:textIsSelectable="false"
         android:textSize="20dp"
         android:gravity="center"
-        android:background="#dffef8"
+        android:background="#E0FFFF"
         android:textColor="#050505" />
 
     <TextView

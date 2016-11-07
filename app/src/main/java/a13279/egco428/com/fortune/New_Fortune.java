@@ -25,12 +25,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-public class New_Fortune extends AppCompatActivity {//implements SensorEventListener {
+public class New_Fortune extends AppCompatActivity implements SensorEventListener {
 
-    //private SensorManager sensorManager;
-    //private boolean sensor = false;
-    //private SensorEvent events;
-    //private long lastUpdate;
+    private SensorManager sensorManager;
+    private boolean sensor = false;
+    private SensorEvent events;
+    private long lastUpdate;
     private boolean isPress=false;
     protected List<Fortune> data;
     TextView tet;
@@ -41,6 +41,7 @@ public class New_Fortune extends AppCompatActivity {//implements SensorEventList
     private String color;
     private String img;
     private FortuneDataSource dataSource;
+    private int count = 0;
     private int countClick = 0;
 
 
@@ -61,8 +62,8 @@ public class New_Fortune extends AppCompatActivity {//implements SensorEventList
         dataSource = new FortuneDataSource(this);
         dataSource.open();
 
-        //sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
-        //lastUpdate = System.currentTimeMillis();
+        sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        lastUpdate = System.currentTimeMillis();
 
     }
 
@@ -91,28 +92,20 @@ public class New_Fortune extends AppCompatActivity {//implements SensorEventList
 
      public void PressBtn (View v){
         if (!isPress) {// && sensor) {
-            Btn.setText("Save");
-            randomCookies();
+            Btn.setText("Shaking");
+            //randomCookies();
             isPress = true;
-            countClick++;
 
-        } else if(isPress && countClick==1 ) {
+        } else {
             pressSave();
-            //Btn.setText("Shake");
+            finish();
             //isPress = false;
-            countClick++;
+
         }
 
     }
 
-//    @Override
-//    public void onSensorChanged(SensorEvent event){
-//        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-//            //getAccelerometer(event);
-//            event = events;
-//            sensor = true;
-//        }
-//    }
+
 
     private void randomCookies(){
 
@@ -155,59 +148,51 @@ public class New_Fortune extends AppCompatActivity {//implements SensorEventList
         comment = dataSource.createFortune(Msg,Date,img,color);
 
     }
-//    private void getAccelerometer(SensorEvent event){
-//        float[] values = event.values;
+    private void getAccelerometer(SensorEvent event) {
+        float[] values = event.values;
 //        // Movement
-//        float x = values[0];
-//        float y = values[1];
-//        float z = values[2];
-//        int count=0;
-//
-//
-//        float accelationSquareRoot = (x * x + y * y + z * z)
-//                / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH); //distance between 2 point
-//        long actualTime = System.currentTimeMillis();
-//
-//        while (count<4)
-//        if (accelationSquareRoot >= 4) //
-//        {
-//            if (actualTime - lastUpdate < 500) {
-//                return;
-//            }
-//            lastUpdate = actualTime;
-//            count++;
-//        }
-//        Random aa = new Random();
-//        int ran = aa.nextInt(5);
-//        data = DataProvider.getData();
-//        Fortune course = data.get(ran);
-//
-//        TextView tet = (TextView)findViewById(R.id.fortuneMsg);
-//        tet.setText("Result:"+course.getFortunemsg());
-//
-//        Calendar cal = Calendar.getInstance();
-//        String d = cal.getTime().toString();
-//
-//        TextView tet2 = (TextView)findViewById(R.id.fortuneDate);
-//        tet2.setText("Date: "+ d );
-//
-//    }
+        float x = values[0];
+        float y = values[1];
+        float z = values[2];
 
-//    @Override
-//    public void onAccuracyChanged(Sensor sensor,int accuracy){
-//
-//    }
-//    @Override
-//    protected void onResume(){
-//        super.onResume();
-//        sensorManager.registerListener(this,sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),SensorManager.SENSOR_DELAY_NORMAL);
-//
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        sensorManager.unregisterListener(this);
-//    }
+        float accelationSquareRoot = (x * x + y * y + z * z)
+                / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH); //distance between 2 point
+        long actualTime = System.currentTimeMillis();
+        if (accelationSquareRoot >= 3 && isPress) {
+            if (actualTime - lastUpdate < 700) {
+                return;
+            }
+            count += 1;
+            lastUpdate = actualTime;
+            if (count > 3) {
+                randomCookies();
+                Btn.setText("Save");
+            }
+        }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+            getAccelerometer(event);
+       }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor,int accuracy){
+
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        sensorManager.registerListener(this,sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),SensorManager.SENSOR_DELAY_NORMAL);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
 
 }
