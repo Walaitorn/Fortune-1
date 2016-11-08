@@ -46,17 +46,23 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.listView);
         listView.setAdapter(fortuneArrayAdapter); //push data in adapter into listview
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
-                FortuneMessage comment = null;
+            public void onItemClick(AdapterView<?> adapterView, final View view,final int position, long l) {
 
                 if(fortuneArrayAdapter.getCount()>0){
-                    comment = fortuneArrayAdapter.getItem(position); // delete first item
+
+                    final FortuneMessage comment = fortuneArrayAdapter.getItem(position); // delete first item
                     dataSource.deleteComment(comment); // delete in database
-                    fortuneArrayAdapter.remove(comment); // delete in listview
+                    view.animate().setDuration(2000).alpha(0).withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            fortuneArrayAdapter.remove(comment); // delete in listviewlist.remove(item);
+                            view.setAlpha(1);
+                        }
+                    });
                 }
             }
         });
